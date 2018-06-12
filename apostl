@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+filelist=$(find . -name '*.html' -type f -not -path './build/*')
+
+while read -r filename; do
+  dirname="${filename%/*}"
+  if [ ! -d "build/$dirname" ]; then
+    mkdir -p "build/$dirname"
+  fi
+  echo "Processing: $filename"
+  m4 "$filename" > "build/$filename"
+done <<< "$filelist"
