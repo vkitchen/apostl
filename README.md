@@ -1,5 +1,5 @@
 # apostl
-A POS Templating Language. For when you need more power in your HTML but you don't want to use some hipster bullshit crazy nodeJS library with fifteen gabillion hundred dependencies, half of which were deprecated three years ago but remain unfixed
+A Piece Of Shit Templating Language. For when you need more power in your HTML but you don't want to use some hipster bullshit crazy nodeJS library with fifteen gabillion hundred dependencies, half of which were deprecated three years ago but remain unfixed
 
 ## What?
 
