@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
-filelist=$(find . -name '*.html' -type f -not -path './build/*')
+NPROC=$(awk '/cpu cores/ {print $4; exit}' /proc/cpuinfo 2>/dev/null || sysctl -n hw.ncpu)
 
-while read -r filename; do
-  dirname="${filename%/*}"
-  if [ ! -d "build/$dirname" ]; then
-    mkdir -p "build/$dirname"
-  fi
-  echo "Processing: $filename"
-  m4 "$filename" > "build/$filename"
-done <<< "$filelist"
+function process_template() {
+  test -d $(dirname "build/$1") || install -d -D $(dirname "build/$1")
+  echo "Processing: ${1}"
+  m4 $1 > build/$1
+}
+export -f process_template
+
+find . -name '*.html' -type f -not -path './build/*' \
+  | xargs -n1 -P ${NPROC} -I {} bash -c 'process_template "$@"' _ {}
